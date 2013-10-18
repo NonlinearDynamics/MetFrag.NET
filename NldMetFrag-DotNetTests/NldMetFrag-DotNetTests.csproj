@@ -38,7 +38,8 @@
   <ItemGroup>
     <Reference Include="cdk-1.4.19, Version=0.0.0.0, Culture=neutral, PublicKeyToken=3e322fcfc9127863, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\NldMetFrag-DotNet\bin\Release\cdk-1.4.19.dll</HintPath>
+      <HintPath>..\AssemblyReferences\cdk-1.4.19.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Core">
       <HintPath>..\AssemblyReferences\IKVM.OpenJDK.Core.dll</HintPath>
