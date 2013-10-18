@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("NldMetFrag-DotNetTests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("MetFrag.NET Tests")]
+[assembly: AssemblyDescription("Unit tests for the MetFrag.NET project")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NldMetFrag-DotNetTests")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCompany("Nonlinear Dynamics")]
+[assembly: AssemblyProduct("MetFrag.NET")]
+[assembly: AssemblyCopyright("Copyright © Nonlinear Dynamics 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
