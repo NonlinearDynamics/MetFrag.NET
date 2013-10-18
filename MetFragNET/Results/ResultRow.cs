@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using NldMetFrag_DotNet.Results;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet
+namespace MetFragNET.Results
 {
 	public class ResultRow
 	{

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using NldMetFrag_DotNet.Results;
-using NldMetFrag_DotNet.Spectra;
+using MetFragNET.Results;
+using MetFragNET.Spectra;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Algorithm
+namespace MetFragNET.Algorithm
 {
 	public class HitsMatcher
 	{

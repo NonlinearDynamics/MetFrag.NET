@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using MetFragNET;
+using MetFragNETTests.Properties;
 using NUnit.Framework;
-using NldMetFrag_DotNet;
-using NldMetFrag_DotNetTests.Properties;
 
-namespace NldMetFrag_DotNetTests
+namespace MetFragNETTests
 {
 	[TestFixture]
 	public class NldMetFragTests
@@ -15,7 +15,7 @@ namespace NldMetFrag_DotNetTests
 		[Test]
 		public void DoesNotCrash_WithCompoundThatHasCrazyRingStructure()
 		{
-			var fragger = new NldMetFrag(Encoding.Default.GetString(Resources.Dihydrohydroxyciguatoxin));
+			var fragger = new MetFrag(Encoding.Default.GetString(Resources.Dihydrohydroxyciguatoxin));
 			fragger.metFrag(TestConfig.ExactMass, TestConfig.Peaks, TestConfig.Mode, TestConfig.MzAbs, TestConfig.MzPpm, CancellationToken.None).ToList();
 		}
 
@@ -34,7 +34,7 @@ namespace NldMetFrag_DotNetTests
 		[Test]
 		public void WhenNoPeaksAreGiven_GeneratesNoHits()
 		{
-			var fragger = new NldMetFrag(Encoding.Default.GetString(Resources.Dihydrohydroxyciguatoxin));
+			var fragger = new MetFrag(Encoding.Default.GetString(Resources.Dihydrohydroxyciguatoxin));
 			var results = fragger.metFrag(TestConfig.ExactMass, "", TestConfig.Mode, TestConfig.MzAbs, TestConfig.MzPpm, CancellationToken.None).ToList();
 
 			Assert.That(results.Count, Is.EqualTo(1));
@@ -44,7 +44,7 @@ namespace NldMetFrag_DotNetTests
 		[Test]
 		public void WhenCandidateHasUnkownElement_GeneratesNoHits()
 		{
-			var fragger = new NldMetFrag(Encoding.Default.GetString(Resources.Digoxin_with_unknown_element));
+			var fragger = new MetFrag(Encoding.Default.GetString(Resources.Digoxin_with_unknown_element));
 			var results = fragger.metFrag(TestConfig.ExactMass, TestConfig.Peaks, TestConfig.Mode, TestConfig.MzAbs, TestConfig.MzPpm, CancellationToken.None).ToList();
 
 			Assert.That(results.Count, Is.EqualTo(1));
@@ -149,7 +149,7 @@ namespace NldMetFrag_DotNetTests
 641.057983398438 12969.8701171875
 643.178955078125 10643.67578125
 646.502868652344 21642.703125";
-			var fragger = new NldMetFrag(Encoding.Default.GetString(Resources.Nonoxynol));
+			var fragger = new MetFrag(Encoding.Default.GetString(Resources.Nonoxynol));
 			var results = fragger.metFrag(TestConfig.ExactMass, peaksToUse, TestConfig.Mode, TestConfig.MzAbs, TestConfig.MzPpm, CancellationToken.None).ToList();
 
 			Assert.That(results.Count, Is.EqualTo(4));
@@ -246,7 +246,7 @@ namespace NldMetFrag_DotNetTests
 553.191772460938 6261.05419921875
 554.188293457031 62017.9765625";
 
-			var fragger = new NldMetFrag(Encoding.Default.GetString(Resources.Alpha_Trisaccharide));
+			var fragger = new MetFrag(Encoding.Default.GetString(Resources.Alpha_Trisaccharide));
 			var results = fragger.metFrag(TestConfig.ExactMass, peaksToUse, TestConfig.Mode, TestConfig.MzAbs, TestConfig.MzPpm, CancellationToken.None).ToList();
 
 			Assert.That(results.Count, Is.EqualTo(4));
@@ -258,7 +258,7 @@ namespace NldMetFrag_DotNetTests
 
 		private static void AssertResults(string peaksToUse, byte[] sdfBytes, IEnumerable<Tuple<int, int>> expected)
 		{
-			var fragger = new NldMetFrag(Encoding.Default.GetString(sdfBytes));
+			var fragger = new MetFrag(Encoding.Default.GetString(sdfBytes));
 			var results = fragger.metFrag(TestConfig.ExactMass, peaksToUse, TestConfig.Mode, TestConfig.MzAbs, TestConfig.MzPpm, CancellationToken.None);
 
 			var resultTuples = results.ToList().Select(row => Tuple.Create(Convert.ToInt32(row.ID), row.FragmentPics.Count()));

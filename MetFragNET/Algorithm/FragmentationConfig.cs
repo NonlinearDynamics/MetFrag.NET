@@ -1,4 +1,4 @@
-namespace NldMetFrag_DotNet.Algorithm
+namespace MetFragNET.Algorithm
 {
 	public struct FragmentationConfig
 	{

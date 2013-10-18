@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading;
+using MetFragNET;
+using MetFragNETTests.Properties;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
-using NldMetFrag_DotNet;
-using NldMetFrag_DotNetTests.Properties;
 
-namespace NldMetFrag_DotNetTests
+namespace MetFragNETTests
 {
 	[TestFixture]
 	public class PolarityTests
@@ -22,7 +21,7 @@ namespace NldMetFrag_DotNetTests
 118.999359130859 4.39520215988159
 124.740966796875 2.43928718566895
 142.267822265625 2.85816287994385";
-			var fragger = new NldMetFrag(Encoding.Default.GetString(Resources.Melibiose));
+			var fragger = new MetFrag(Encoding.Default.GetString(Resources.Melibiose));
 			var results = fragger.metFrag(double.MaxValue, peaks, -1, mzAbs, mzPpm, CancellationToken.None).ToList();
 
 			Assert.That(results.Count, Is.EqualTo(1));
@@ -44,7 +43,7 @@ namespace NldMetFrag_DotNetTests
 133.076599121094 441
 179.09489440918 765
 171.044692993164 283";
-			var fragger = new NldMetFrag(Encoding.Default.GetString(Resources.Norsalsolinol));
+			var fragger = new MetFrag(Encoding.Default.GetString(Resources.Norsalsolinol));
 			var results = fragger.metFrag(double.MaxValue, peaks, 1, mzAbs, mzPpm, CancellationToken.None).ToList();
 
 			Assert.That(results.Count, Is.EqualTo(1));

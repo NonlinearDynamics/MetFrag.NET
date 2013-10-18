@@ -1,7 +1,7 @@
-﻿using NldMetFrag_DotNet.Spectra;
+﻿using MetFragNET.Spectra;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Results
+namespace MetFragNET.Results
 {
 	public class PeakMolPair
 	{

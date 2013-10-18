@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NldMetFrag_DotNet.Spectra
+namespace MetFragNET.Spectra
 {
 	public class CleanUpPeakList
 	{

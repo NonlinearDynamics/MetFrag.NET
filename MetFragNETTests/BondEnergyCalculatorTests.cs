@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MetFragNET.Results;
 using NUnit.Framework;
-using NldMetFrag_DotNet.Results;
 using org.openscience.cdk;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNetTests
+namespace MetFragNETTests
 {
 	[TestFixture]
 	public class BondEnergyCalculatorTests

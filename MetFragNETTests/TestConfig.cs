@@ -1,4 +1,4 @@
-﻿namespace NldMetFrag_DotNetTests
+﻿namespace MetFragNETTests
 {
 	public class TestConfig
 	{

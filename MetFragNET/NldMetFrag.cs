@@ -2,18 +2,19 @@
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using NldMetFrag_DotNet.Algorithm;
-using NldMetFrag_DotNet.Spectra;
+using MetFragNET.Algorithm;
+using MetFragNET.Results;
+using MetFragNET.Spectra;
 using org.openscience.cdk.graph;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet
+namespace MetFragNET
 {
-	public class NldMetFrag
+	public class MetFrag
 	{
 		private readonly IList<IAtomContainer> candidateSdfs;
 
-		public NldMetFrag(string candidatesSdfString)
+		public MetFrag(string candidatesSdfString)
 		{
 			candidateSdfs = new SdfParser().Parse(candidatesSdfString).ToList();
 		}

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Fragmentation
+namespace MetFragNET.Fragmentation
 {
 	public class BondEnergies
 	{

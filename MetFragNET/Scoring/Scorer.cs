@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NldMetFrag_DotNet.Scoring
+namespace MetFragNET.Scoring
 {
 	public class Scorer
 	{

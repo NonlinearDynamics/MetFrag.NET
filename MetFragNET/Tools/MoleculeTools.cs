@@ -2,7 +2,7 @@
 using System.Globalization;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Tools
+namespace MetFragNET.Tools
 {
 	public class MoleculeTools
 	{

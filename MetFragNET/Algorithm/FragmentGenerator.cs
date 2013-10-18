@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using NldMetFrag_DotNet.Fragmentation;
-using NldMetFrag_DotNet.Spectra;
+using MetFragNET.Fragmentation;
+using MetFragNET.Spectra;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Algorithm
+namespace MetFragNET.Algorithm
 {
 	public class FragmentGenerator
 	{

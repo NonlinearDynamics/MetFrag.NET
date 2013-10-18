@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using NldMetFrag_DotNet.Fragmentation;
+using MetFragNET.Fragmentation;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Results
+namespace MetFragNET.Results
 {
 	public class BondEnergyCalculator
 	{

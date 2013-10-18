@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using MetFragNET;
+using MetFragNETTests.Properties;
 using NUnit.Framework;
-using NldMetFrag_DotNet;
-using NldMetFrag_DotNetTests.Properties;
 
-namespace NldMetFrag_DotNetTests
+namespace MetFragNETTests
 {
 	[TestFixture]
 	public class MolecularFormulaTests
@@ -69,7 +68,7 @@ namespace NldMetFrag_DotNetTests
 1941.10046386719 6494.98876953125
 1942.84094238281 8874.51953125";
 
-			var fragger = new NldMetFrag(Encoding.Default.GetString(Resources.Digoxin));
+			var fragger = new MetFrag(Encoding.Default.GetString(Resources.Digoxin));
 			var results = fragger.metFrag(TestConfig.ExactMass, peaksToUse, TestConfig.Mode, TestConfig.MzAbs, TestConfig.MzPpm, CancellationToken.None).ToList();
 
 			Assert.That(results.Count, Is.EqualTo(5));

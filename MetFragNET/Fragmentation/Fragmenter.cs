@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using NldMetFrag_DotNet.Algorithm;
-using NldMetFrag_DotNet.Spectra;
-using NldMetFrag_DotNet.Tools;
+using MetFragNET.Algorithm;
+using MetFragNET.Spectra;
+using MetFragNET.Tools;
 using ikvm.extensions;
 using java.io;
 using java.lang;
@@ -19,7 +19,7 @@ using org.openscience.cdk.tools.manipulator;
 using Double = System.Double;
 using String = System.String;
 
-namespace NldMetFrag_DotNet.Fragmentation
+namespace MetFragNET.Fragmentation
 {
 	public class Fragmenter
 	{

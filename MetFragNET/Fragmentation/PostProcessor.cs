@@ -3,7 +3,7 @@ using org.openscience.cdk;
 using org.openscience.cdk.graph;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Fragmentation
+namespace MetFragNET.Fragmentation
 {
 	public class PostProcessor
 	{

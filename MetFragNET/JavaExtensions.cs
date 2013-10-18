@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using java.lang;
-using java.util;
 
-namespace NldMetFrag_DotNet
+namespace MetFragNET
 {
 	public static class JavaExtensions
 	{

@@ -1,6 +1,6 @@
 using System;
 
-namespace NldMetFrag_DotNet.Spectra
+namespace MetFragNET.Spectra
 {
 	public class Peak
 	{

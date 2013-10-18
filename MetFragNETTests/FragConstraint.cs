@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using MetFragNET.Results;
 using NUnit.Framework.Constraints;
-using NldMetFrag_DotNet.Results;
 
-namespace NldMetFrag_DotNetTests
+namespace MetFragNETTests
 {
 	public class FragConstraint : Constraint
 	{

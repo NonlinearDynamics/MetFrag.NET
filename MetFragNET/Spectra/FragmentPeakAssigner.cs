@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NldMetFrag_DotNet.Results;
-using NldMetFrag_DotNet.Tools;
+using MetFragNET.Results;
+using MetFragNET.Tools;
 using org.openscience.cdk.formula;
 using org.openscience.cdk.interfaces;
 using org.openscience.cdk.tools.manipulator;
 
-namespace NldMetFrag_DotNet.Spectra
+namespace MetFragNET.Spectra
 {
 	public class FragmentPeakAssigner
 	{

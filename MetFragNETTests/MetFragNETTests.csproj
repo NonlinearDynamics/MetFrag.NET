@@ -6,8 +6,8 @@
     <ProjectGuid>{4D566377-2DD7-4119-983C-B55078921357}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NldMetFrag_DotNetTests</RootNamespace>
-    <AssemblyName>NldMetFrag-DotNetTests</AssemblyName>
+    <RootNamespace>MetFragNETTests</RootNamespace>
+    <AssemblyName>MetFragNETTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

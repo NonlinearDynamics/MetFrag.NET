@@ -4,7 +4,7 @@ using org.openscience.cdk.interfaces;
 using org.openscience.cdk.tools;
 using org.openscience.cdk.tools.manipulator;
 
-namespace NldMetFrag_DotNet.Algorithm
+namespace MetFragNET.Algorithm
 {
 	public class ImplicitHydrogenAdder
 	{

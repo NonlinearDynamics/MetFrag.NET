@@ -7,8 +7,8 @@
     <ProjectGuid>{27BC2FFE-5903-45BD-A2CB-DB86F990F1DB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NldMetFrag_DotNet</RootNamespace>
-    <AssemblyName>NldMetFrag-DotNet</AssemblyName>
+    <RootNamespace>MetFragNET</RootNamespace>
+    <AssemblyName>MetFragNET</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

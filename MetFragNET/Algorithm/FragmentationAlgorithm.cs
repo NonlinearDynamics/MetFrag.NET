@@ -1,7 +1,8 @@
 using System.Threading;
+using MetFragNET.Results;
 using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Algorithm
+namespace MetFragNET.Algorithm
 {
 	public class FragmentationAlgorithm
 	{

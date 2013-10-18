@@ -5,7 +5,7 @@ using org.openscience.cdk.interfaces;
 using org.openscience.cdk.io;
 using org.openscience.cdk.tools.manipulator;
 
-namespace NldMetFrag_DotNet.Algorithm
+namespace MetFragNET.Algorithm
 {
 	public class SdfParser
 	{

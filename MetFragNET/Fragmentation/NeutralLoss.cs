@@ -1,6 +1,6 @@
 ﻿using org.openscience.cdk.interfaces;
 
-namespace NldMetFrag_DotNet.Fragmentation
+namespace MetFragNET.Fragmentation
 {
 	public class NeutralLoss
 	{

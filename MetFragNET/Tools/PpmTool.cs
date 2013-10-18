@@ -1,4 +1,4 @@
-﻿namespace NldMetFrag_DotNet.Tools
+﻿namespace MetFragNET.Tools
 {
 	public class PpmTool
 	{

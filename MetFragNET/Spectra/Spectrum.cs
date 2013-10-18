@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace NldMetFrag_DotNet.Spectra
+namespace MetFragNET.Spectra
 {
 	public class Spectrum
 	{
