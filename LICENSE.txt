@@ -1,0 +1,39 @@
+This is a derivative work of the original Java MetFrag project (https://github.com/s-wolf/MetFrag/).
+
+Original Author:
+===============
+
+Copyright (C) 2009-2010 IPB Halle, Sebastian Wolf
+Contact: swolf@ipb-halle.de
+
+Port to .NET and changes in this derivative:
+===========================================
+
+Copyright (C) 2013 Nonlinear Dynamics Ltd
+Contact: info@nonlinear.com
+
+
+License terms
+=============
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+See LGPL.txt for full text of the license.
+
+Linked Modules
+==============
+
+The included module "cdk-1.4.19.dll" is licensed under the GNU LGPLv2 (see http://sourceforge.net/projects/cdk/)
+The included modules "IKVM.*.dll" are licensed under the "GPL v2 + "Classpath" exception" (see http://sourceforge.net/apps/mediawiki/ikvm/index.php?title=License)
