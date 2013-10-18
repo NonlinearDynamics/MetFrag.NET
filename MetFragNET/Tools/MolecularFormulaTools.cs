@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using org.openscience.cdk;
 using org.openscience.cdk.config;
@@ -77,6 +80,45 @@ namespace MetFragNET.Tools
 				parsedFormula[symbol] = mass;
 			}
 			return parsedFormula;
+		}
+
+
+
+		public static string GetString(IMolecularFormula formula)
+		{
+			var stringMF = new StringBuilder();
+			var carbon = new Element("C");
+			var poossibleElements = MolecularFormulaManipulator.containsElement(formula, carbon) ? HillSystem.ElementsWithCarbons : HillSystem.ElementsWithoutCarbons;
+
+			var elemCounts = new OrderedDictionary();
+			foreach (var possibleElement in poossibleElements)
+			{
+				elemCounts.Add(possibleElement, 0);
+			}
+
+			foreach (var isotope in formula.isotopes().ToWindowsEnumerable<IIsotope>())
+			{
+				var isotopeSymbol = isotope.getSymbol();
+				var currentCount = (int)elemCounts[isotopeSymbol];
+				elemCounts[isotopeSymbol] = currentCount + formula.getIsotopeCount(isotope);
+			}
+
+			var parts = new List<string>();
+			foreach (DictionaryEntry elemCount in elemCounts)
+			{
+				var count = (int)elemCount.Value;
+				var elem = (string)elemCount.Key;
+				if (count == 1)
+				{
+					parts.Add(elem);
+				}
+				else if (count > 1)
+				{
+					parts.Add(string.Format("{0}{1}", elem, count));
+				}
+			}
+
+			return string.Join("", parts);
 		}
 
 		public static bool IsPossibleNeutralLoss(Dictionary<string, double> originalFormulaMap, IMolecularFormula neutralLossFormula)

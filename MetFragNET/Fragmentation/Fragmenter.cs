@@ -327,7 +327,7 @@ namespace MetFragNET.Fragmentation
 							//returns true if isomorph
 							//set the current sum formula
 							var fragmentFormula = MolecularFormulaManipulator.getMolecularFormula(set[j]);
-							var currentSumFormula = MolecularFormulaManipulator.getString(fragmentFormula);
+							var currentSumFormula = MolecularFormulaTools.GetString(fragmentFormula);
 
 							if (isIdentical(set[j], currentSumFormula))
 							{
@@ -388,7 +388,7 @@ namespace MetFragNET.Fragmentation
 
 						//set the current sum formula
 						var fragmentFormula = MolecularFormulaManipulator.getMolecularFormula(set[i]);
-						var currentSumFormula = MolecularFormulaManipulator.getString(fragmentFormula);
+						var currentSumFormula = MolecularFormulaTools.GetString(fragmentFormula);
 						//returns true if isomorph (fast isomorph check)
 						if (isIdentical(set[i], currentSumFormula))
 						{
@@ -591,7 +591,7 @@ namespace MetFragNET.Fragmentation
 
 				//Molecular Formula redundancy check
 				var molFormulaFrag = MolecularFormulaManipulator.getMolecularFormula(fragsToCompare[i]);
-				var molFormulaFragString = MolecularFormulaManipulator.getString(molFormulaFrag);
+				var molFormulaFragString = MolecularFormulaTools.GetString(molFormulaFrag);
 				if (molFormulaString.Equals(molFormulaFragString))
 				{
 					return true;
@@ -883,8 +883,8 @@ namespace MetFragNET.Fragmentation
 								fragmentNL = setBondEnergy(fragment, fragmentNL, 500.0);
 
 								var props = fragmentNL.getProperties();
-								props.put("NeutralLossRule", MolecularFormulaManipulator.getString(neutralLossFormula));
-								addFragmentToListMap(fragmentNL, MolecularFormulaManipulator.getString(fragmentMolFormula));
+								props.put("NeutralLossRule", MolecularFormulaTools.GetString(neutralLossFormula));
+								addFragmentToListMap(fragmentNL, MolecularFormulaTools.GetString(fragmentMolFormula));
 
 								//add to result list
 								ret.Add(fragmentNL);
