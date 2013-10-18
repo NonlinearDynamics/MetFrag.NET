@@ -25,7 +25,7 @@ If you wish to modify the operation of this library, you can simply modify this 
 
 You should then copy the files in:
 
-`NldMetFrag-DotNet\NldMetFrag-DotNet\bin\Release`
+`MetFragNET\bin\Release`
 
 to the following location:
 
