@@ -83,9 +83,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NldMetFrag-DotNet\NldMetFrag-DotNet.csproj">
+    <ProjectReference Include="..\NldMetFrag-DotNet\MetFrag.NET.csproj">
       <Project>{27bc2ffe-5903-45bd-a2cb-db86f990f1db}</Project>
-      <Name>NldMetFrag-DotNet</Name>
+      <Name>MetFrag.NET</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

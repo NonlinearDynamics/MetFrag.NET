@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NldMetFrag-DotNet", "NldMetFrag-DotNet\NldMetFrag-DotNet.csproj", "{27BC2FFE-5903-45BD-A2CB-DB86F990F1DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetFrag.NET", "NldMetFrag-DotNet\MetFrag.NET.csproj", "{27BC2FFE-5903-45BD-A2CB-DB86F990F1DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NldMetFrag-DotNetTests", "NldMetFrag-DotNetTests\NldMetFrag-DotNetTests.csproj", "{4D566377-2DD7-4119-983C-B55078921357}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetFrag.NET-Tests", "NldMetFrag-DotNetTests\MetFrag.NET-Tests.csproj", "{4D566377-2DD7-4119-983C-B55078921357}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C5F55F10-5956-498B-AA4F-EAC36D47AF87}"
 	ProjectSection(SolutionItems) = preProject
