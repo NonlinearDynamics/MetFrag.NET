@@ -6,16 +6,7 @@ namespace MetFragNET.Tools
 {
 	public static class HillSystem
 	{
-		public static readonly string[] ElementsWithCarbons;
-		public static readonly string[] ElementsWithoutCarbons;
-
-		static HillSystem()
-		{
-			ElementsWithCarbons = elementsWithCarbons;
-			ElementsWithoutCarbons = elementsWithoutCarbons;
-		}
-
-		private static readonly string[] elementsWithCarbons = new[]
+		public static readonly string[] ElementsWithCarbons = new[]
 			{
 				"C", "H",
 				"Ac", "Ag", "Al", "Am", "Ar", "As", "At", "Au",
@@ -42,7 +33,7 @@ namespace MetFragNET.Tools
 			};
 
 
-		private static readonly string[] elementsWithoutCarbons = new[]
+		public static readonly string[] ElementsWithoutCarbons = new[]
 			{
 				"Ac", "Ag", "Al", "Am", "Ar", "As", "At", "Au",
 				"B", "Ba", "Be", "Bh", "Bi", "Bk", "Br",

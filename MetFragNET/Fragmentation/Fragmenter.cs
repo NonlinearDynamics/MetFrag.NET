@@ -706,8 +706,7 @@ namespace MetFragNET.Fragmentation
 			var atoms = new List<IAtom>();
 			var bonds = new List<IBond>();
 			var atomsDone = new bool[atomsContained];
-
-			IAtomContainer partContainer = new AtomContainer();
+			
 			atoms.Add(atom);
 			atomsDone[Integer.parseInt(atom.getID())] = true;
 
@@ -727,6 +726,7 @@ namespace MetFragNET.Fragmentation
 				bonds.Add(aBond);				
 			}
 
+			IAtomContainer partContainer = new AtomContainer();
 			partContainer.setAtoms(atoms.ToArray());
 			partContainer.setBonds(bonds.ToArray());
 			return partContainer;
