@@ -82,11 +82,9 @@ namespace MetFragNET.Tools
 			return parsedFormula;
 		}
 
-
-
+		// This is ported from the CDK and modified to not do so much uneccessary looping
 		public static string GetString(IMolecularFormula formula)
 		{
-			var stringMF = new StringBuilder();
 			var carbon = new Element("C");
 			var poossibleElements = MolecularFormulaManipulator.containsElement(formula, carbon) ? HillSystem.ElementsWithCarbons : HillSystem.ElementsWithoutCarbons;
 

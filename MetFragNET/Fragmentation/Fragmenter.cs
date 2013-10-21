@@ -579,7 +579,7 @@ namespace MetFragNET.Fragmentation
 		private bool identicalAtoms(IAtomContainer molecule1, List<IAtomContainer> fragsToCompare)
 		{
 			var molFormula = MolecularFormulaManipulator.getMolecularFormula(molecule1);
-			var molFormulaString = MolecularFormulaManipulator.getString(molFormula);
+			var molFormulaString = MolecularFormulaTools.GetString(molFormula);
 
 			for (var i = 0; i < fragsToCompare.Count; i++)
 			{
