@@ -1,4 +1,4 @@
-# MetFragDotNet
+# MetFrag.NET
 ## Project information
 
 This is a port to .NET of the [original MetFrag project](https://github.com/s-wolf/MetFrag/), and is licensed under the LGPL.
