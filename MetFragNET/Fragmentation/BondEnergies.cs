@@ -97,15 +97,17 @@ namespace MetFragNET.Fragmentation
 		private static double Lookup(string atom1, string atom2, string order)
 		{
 			var inOrderBondDesc = BondDescription(atom1, atom2, order);
-			if (energies.ContainsKey(inOrderBondDesc))
+
+			var bondEnergy = 0.0;
+			if (energies.TryGetValue(inOrderBondDesc, out bondEnergy))
 			{
-				return energies[inOrderBondDesc];
+				return bondEnergy;
 			}
 
 			var reversedBondDesc = BondDescription(atom2, atom1, order);
-			if (energies.ContainsKey(reversedBondDesc))
+			if (energies.TryGetValue(reversedBondDesc, out bondEnergy))
 			{
-				return energies[reversedBondDesc];
+				return bondEnergy;
 			}
 
 			//not a covalent bond? just assume a C-C bond TODO!

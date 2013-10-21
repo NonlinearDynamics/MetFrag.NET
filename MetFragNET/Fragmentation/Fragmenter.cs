@@ -151,6 +151,7 @@ namespace MetFragNET.Fragmentation
 
 				//get a fragment from the priority queue
 				var currentFragment = fragmentQueue.Dequeue();
+				var atomBonds = GetAtomBondsDictionary(currentFragment);
 
 				//reduce the number of fragments in this level
 				tempLevelCount--;
@@ -161,7 +162,7 @@ namespace MetFragNET.Fragmentation
 					continue;
 				}
 
-				var splitableBonds = getSplitableBonds(currentFragment);
+				var splitableBonds = getSplitableBonds(currentFragment, atomBonds);
 
 				//no splitable bonds are found
 				if (splitableBonds.Count == 0)
@@ -171,7 +172,7 @@ namespace MetFragNET.Fragmentation
 
 				foreach (var bond in splitableBonds)
 				{
-					var parts = splitMolecule(currentFragment, bond);
+					var parts = splitMolecule(currentFragment, bond, atomBonds);
 
 					foreach (var partContainer in parts)
 					{
@@ -210,7 +211,7 @@ namespace MetFragNET.Fragmentation
 			return molecule;
 		}
 
-		private List<IBond> getSplitableBonds(IAtomContainer atomContainer)
+		private List<IBond> getSplitableBonds(IAtomContainer atomContainer, IDictionary<IAtom, IList<IBond>> atomBonds)
 		{
 			// find the splitable bonds
 			var splitableBonds = new List<IBond>();
@@ -223,7 +224,7 @@ namespace MetFragNET.Fragmentation
 				foreach (var atom in bond.atoms().ToWindowsEnumerable<IAtom>())
 				{
 					//dont split up "terminal" H atoms
-					if (atomContainer.getConnectedAtomsCount(atom) == 1 && atom.getSymbol().StartsWith("H"))
+					if (atomBonds[atom].Count == 1 && atom.getSymbol().StartsWith("H"))
 					{
 						//terminal hydrogen...ignore it
 						isTerminal = true;
@@ -240,7 +241,7 @@ namespace MetFragNET.Fragmentation
 		}
 
 
-		private IEnumerable<IAtomContainer> splitMolecule(IAtomContainer atomContainer, IBond bond)
+		private IEnumerable<IAtomContainer> splitMolecule(IAtomContainer atomContainer, IBond bond, IDictionary<IAtom, IList<IBond>> atomBonds)
 		{
 			//if this bond is in a ring we have to split another bond in this ring where at least one 
 			//bond is in between. Otherwise we wont have two fragments. Else normal split.
@@ -248,8 +249,7 @@ namespace MetFragNET.Fragmentation
 			var ret = new List<IAtomContainer>();
 
 			//get bond energy for splitting this bond
-			var currentBondEnergy = BondEnergies.Lookup(bond);
-
+			var currentBondEnergy = BondEnergies.Lookup(bond);			
 
 			//bond is in a ring....so we have to split up another bond to break it
 			var rings = allRings.getRings(bond);
@@ -286,7 +286,7 @@ namespace MetFragNET.Fragmentation
 						atomList = new List<IAtom>();
 
 						//clone current atom because a single electron is being added...homolytic cleavage
-						partRing = traverse(atomContainer, currentAtom, partRing, bond, bondInRing);
+						partRing = traverse(atomBonds, currentAtom, partRing, bond, bondInRing);
 
 						bondListList.Add(partRing);
 						fragWeightList.Add(currentFragWeight);
@@ -353,7 +353,7 @@ namespace MetFragNET.Fragmentation
 					currentFragWeight = 0.0;
 					//initialize new atom list
 					atomList = new List<IAtom>();
-					part = traverse(atomContainer, currentAtom, part, bond);
+					part = traverse(atomBonds, currentAtom, part, bond);
 					bondListList.Add(part);
 
 					//create Atomcontainer out of bondList        		
@@ -533,11 +533,11 @@ namespace MetFragNET.Fragmentation
 		{
 			var isomorph = false;
 
+			List<IAtomContainer> fragsToCompare = null;
+			
 			//iterate over list to check for isomorphism
-			if (sumformulaToFragMap.ContainsKey(currentSumFormula))
+			if (sumformulaToFragMap.TryGetValue(currentSumFormula, out fragsToCompare))
 			{
-				var fragsToCompare = sumformulaToFragMap[currentSumFormula];
-
 				isomorph = identicalAtoms(fragment, fragsToCompare);
 
 				if (isomorph)
@@ -610,9 +610,11 @@ namespace MetFragNET.Fragmentation
 		private void addFragmentToListMap(IAtomContainer frag, String currentSumFormula)
 		{
 			//add sum formula molecule comb. to map
-			if (sumformulaToFragMap.ContainsKey(currentSumFormula))
+			List<IAtomContainer> tempList = null;
+
+			if (sumformulaToFragMap.TryGetValue(currentSumFormula, out tempList))
 			{
-				var tempList = sumformulaToFragMap[currentSumFormula];
+				tempList = tempList.ToList();
 				tempList.Add(frag);
 				sumformulaToFragMap[currentSumFormula] = tempList;
 			}
@@ -635,9 +637,11 @@ namespace MetFragNET.Fragmentation
 		private void addFragmentToListMapReplace(IAtomContainer frag, String currentSumFormula)
 		{
 			//add sum formula molecule comb. to map
-			if (sumformulaToFragMap.ContainsKey(currentSumFormula))
+			List<IAtomContainer> tempList = null;
+
+			if (sumformulaToFragMap.TryGetValue(currentSumFormula, out tempList))
 			{
-				var tempList = sumformulaToFragMap[currentSumFormula].ToList();
+				tempList = tempList.ToList();
 				tempList.Clear();
 				tempList.Add(frag);
 				sumformulaToFragMap[currentSumFormula] = tempList;
@@ -705,23 +709,25 @@ namespace MetFragNET.Fragmentation
 		{
 			var atoms = new List<IAtom>();
 			var bonds = new List<IBond>();
-			var atomsDone = new bool[atomsContained];
-			
+			var atomsDone = new Dictionary<string, bool>();
+
 			atoms.Add(atom);
-			atomsDone[Integer.parseInt(atom.getID())] = true;
+			atomsDone[atom.getID()] = true;
 
 			foreach (var aBond in parts)
 			{
 				foreach (var bondedAtom in aBond.atoms().ToWindowsEnumerable<IAtom>())
 				{
+					var done = false;
+					atomsDone.TryGetValue(bondedAtom.getID(), out done);
 					//check if the atom is already contained
-					if (atomsDone[Integer.parseInt(bondedAtom.getID())])
+					if (done)
 					{
 						continue;
 					}
 					
 					atoms.Add(bondedAtom);
-					atomsDone[Integer.parseInt(bondedAtom.getID())] = true;
+					atomsDone[bondedAtom.getID()] = true;
 				}
 				bonds.Add(aBond);				
 			}
@@ -744,12 +750,11 @@ namespace MetFragNET.Fragmentation
 		 * @return the list< i bond>
 		 */
 
-		private List<IBond> traverse(IAtomContainer atomContainer, IAtom atom, List<IBond> bondList, IBond bondToRemove)
+		private List<IBond> traverse(IDictionary<IAtom, IList<IBond>> atomBonds, IAtom atom, List<IBond> bondList, IBond bondToRemove)
 		{
-			var connectedBonds = atomContainer.getConnectedBondsList(atom);
+			var connectedBonds = atomBonds[atom];
 
-
-			foreach (var aBond in connectedBonds.ToWindowsEnumerable<IBond>())
+			foreach (var aBond in connectedBonds)
 			{
 				if (bondList.Contains(aBond) || aBond.Equals(bondToRemove))
 				{
@@ -769,13 +774,30 @@ namespace MetFragNET.Fragmentation
 				}
 
 				var nextAtom = aBond.getConnectedAtom(atom);
-				if (atomContainer.getConnectedAtomsCount(nextAtom) == 1)
+				if (atomBonds[nextAtom].Count == 1)
 				{
 					continue;
 				}
-				traverse(atomContainer, nextAtom, bondList, bondToRemove);
+				traverse(atomBonds, nextAtom, bondList, bondToRemove);
 			}
 			return bondList;
+		}
+
+		private IDictionary<IAtom, IList<IBond>> GetAtomBondsDictionary(IAtomContainer atomContainer)
+		{
+			var dict = new Dictionary<IAtom, IList<IBond>>();
+			foreach (var bond in atomContainer.bonds().ToWindowsEnumerable<IBond>())
+			{
+				foreach (var atom in bond.atoms().ToWindowsEnumerable<IAtom>())
+				{
+					if (!dict.ContainsKey(atom))
+					{
+						dict[atom] = new List<IBond>();
+					}
+					dict[atom].Add(bond);
+				}
+			}
+			return dict;
 		}
 
 		/**
@@ -789,10 +811,10 @@ namespace MetFragNET.Fragmentation
 		 * @return the list< i bond>
 		 */
 
-		private List<IBond> traverse(IAtomContainer atomContainer, IAtom atom, List<IBond> bondList, IBond bondToRemove, IBond bondToRemove2)
+		private List<IBond> traverse(IDictionary<IAtom, IList<IBond>> atomBonds, IAtom atom, List<IBond> bondList, IBond bondToRemove, IBond bondToRemove2)
 		{
-			var connectedBonds = atomContainer.getConnectedBondsList(atom);
-			foreach (var aBond in connectedBonds.ToWindowsEnumerable<IBond>())
+			var connectedBonds = atomBonds[atom];
+			foreach (var aBond in connectedBonds)
 			{
 				if (bondList.Contains(aBond) || aBond.Equals(bondToRemove) || aBond.Equals(bondToRemove2))
 				{
@@ -811,11 +833,11 @@ namespace MetFragNET.Fragmentation
 				}
 
 				var nextAtom = aBond.getConnectedAtom(atom);
-				if (atomContainer.getConnectedAtomsCount(nextAtom) == 1)
+				if (atomBonds[nextAtom].Count == 1)
 				{
 					continue;
 				}
-				traverse(atomContainer, nextAtom, bondList, bondToRemove, bondToRemove2);
+				traverse(atomBonds, nextAtom, bondList, bondToRemove, bondToRemove2);
 			}
 			return bondList;
 		}
