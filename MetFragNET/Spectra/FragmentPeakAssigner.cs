@@ -116,7 +116,7 @@ namespace MetFragNET.Spectra
 
 		private static string GetMolecularFormulaAsString(IAtomContainer ac)
 		{
-			return MolecularFormulaManipulator.getHTML(GetMolecularFormula(ac));
+			return MolecularFormulaTools.GetString(GetMolecularFormula(ac));
 		}
 
 		private static IMolecularFormula GetMolecularFormula(IAtomContainer ac)

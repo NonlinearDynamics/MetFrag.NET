@@ -72,6 +72,7 @@
     <Compile Include="Algorithm\HitsMatcher.cs" />
     <Compile Include="Algorithm\ImplicitHydrogenAdder.cs" />
     <Compile Include="Algorithm\SdfParser.cs" />
+    <Compile Include="Algorithm\SilentLoggingTool.cs" />
     <Compile Include="Fragmentation\BondEnergies.cs" />
     <Compile Include="Fragmentation\BondPair.cs" />
     <Compile Include="Fragmentation\Fragmenter.cs" />

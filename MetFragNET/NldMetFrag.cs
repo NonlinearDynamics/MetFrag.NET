@@ -5,8 +5,10 @@ using System.Threading;
 using MetFragNET.Algorithm;
 using MetFragNET.Results;
 using MetFragNET.Spectra;
+using java.lang;
 using org.openscience.cdk.graph;
 using org.openscience.cdk.interfaces;
+using org.openscience.cdk.tools;
 
 namespace MetFragNET
 {
@@ -16,11 +18,13 @@ namespace MetFragNET
 
 		public MetFrag(string candidatesSdfString)
 		{
+			LoggingToolFactory.setLoggingToolClass(typeof(SilentLoggingTool));
+
 			candidateSdfs = new SdfParser().Parse(candidatesSdfString).ToList();
 		}
 
 		public IEnumerable<ResultRow> metFrag(double exactMass, string strPeaks, int mode, double mzabs, double mzppm, CancellationToken isCancelled)
-		{
+		{			
 			var config = new FragmentationConfig(mzabs, mzppm, mode);
 			var spectrum = new Spectrum(strPeaks, exactMass, mode);
 
