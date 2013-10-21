@@ -153,9 +153,9 @@ namespace MetFragNET.Tools
 
 			foreach (var element in neutralLossFormulaMap.Keys)
 			{
-				if (originalFormulaMap.ContainsKey(element))
+				var massElementOrig = 0.0;
+				if (originalFormulaMap.TryGetValue(element, out massElementOrig))
 				{
-					var massElementOrig = originalFormulaMap[element];
 					var massNeutralLoss = neutralLossFormulaMap[element];
 					if ((massElementOrig - massNeutralLoss) < 0)
 					{

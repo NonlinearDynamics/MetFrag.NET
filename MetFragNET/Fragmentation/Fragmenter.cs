@@ -533,11 +533,11 @@ namespace MetFragNET.Fragmentation
 		{
 			var isomorph = false;
 
+			List<IAtomContainer> fragsToCompare = null;
+			
 			//iterate over list to check for isomorphism
-			if (sumformulaToFragMap.ContainsKey(currentSumFormula))
+			if (sumformulaToFragMap.TryGetValue(currentSumFormula, out fragsToCompare))
 			{
-				var fragsToCompare = sumformulaToFragMap[currentSumFormula];
-
 				isomorph = identicalAtoms(fragment, fragsToCompare);
 
 				if (isomorph)
@@ -610,9 +610,11 @@ namespace MetFragNET.Fragmentation
 		private void addFragmentToListMap(IAtomContainer frag, String currentSumFormula)
 		{
 			//add sum formula molecule comb. to map
-			if (sumformulaToFragMap.ContainsKey(currentSumFormula))
+			List<IAtomContainer> tempList = null;
+
+			if (sumformulaToFragMap.TryGetValue(currentSumFormula, out tempList))
 			{
-				var tempList = sumformulaToFragMap[currentSumFormula];
+				tempList = tempList.ToList();
 				tempList.Add(frag);
 				sumformulaToFragMap[currentSumFormula] = tempList;
 			}
@@ -635,9 +637,11 @@ namespace MetFragNET.Fragmentation
 		private void addFragmentToListMapReplace(IAtomContainer frag, String currentSumFormula)
 		{
 			//add sum formula molecule comb. to map
-			if (sumformulaToFragMap.ContainsKey(currentSumFormula))
+			List<IAtomContainer> tempList = null;
+
+			if (sumformulaToFragMap.TryGetValue(currentSumFormula, out tempList))
 			{
-				var tempList = sumformulaToFragMap[currentSumFormula].ToList();
+				tempList = tempList.ToList();
 				tempList.Clear();
 				tempList.Add(frag);
 				sumformulaToFragMap[currentSumFormula] = tempList;
