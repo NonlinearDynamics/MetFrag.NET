@@ -9,12 +9,11 @@ using MetFragNET.Tools;
 using ikvm.extensions;
 using java.io;
 using java.lang;
-using org.openscience.cdk;
 using org.openscience.cdk.aromaticity;
 using org.openscience.cdk.config;
-using org.openscience.cdk.formula;
 using org.openscience.cdk.interfaces;
 using org.openscience.cdk.ringsearch;
+using org.openscience.cdk.silent;
 using org.openscience.cdk.tools.manipulator;
 using Double = System.Double;
 using String = System.String;
@@ -704,10 +703,12 @@ namespace MetFragNET.Fragmentation
 
 		private IAtomContainer makeAtomContainer(IAtom atom, List<IBond> parts)
 		{
+			var atoms = new List<IAtom>();
+			var bonds = new List<IBond>();
 			var atomsDone = new bool[atomsContained];
 
 			IAtomContainer partContainer = new AtomContainer();
-			partContainer.addAtom(atom);
+			atoms.Add(atom);
 			atomsDone[Integer.parseInt(atom.getID())] = true;
 
 			foreach (var aBond in parts)
@@ -719,12 +720,15 @@ namespace MetFragNET.Fragmentation
 					{
 						continue;
 					}
-
-					partContainer.addAtom(bondedAtom);
+					
+					atoms.Add(bondedAtom);
 					atomsDone[Integer.parseInt(bondedAtom.getID())] = true;
 				}
-				partContainer.addBond(aBond);
+				bonds.Add(aBond);				
 			}
+
+			partContainer.setAtoms(atoms.ToArray());
+			partContainer.setBonds(bonds.ToArray());
 			return partContainer;
 		}
 
