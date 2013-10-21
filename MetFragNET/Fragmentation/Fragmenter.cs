@@ -127,7 +127,7 @@ namespace MetFragNET.Fragmentation
 			var treeDepth = 1;
 
 			//add neutral loss in the first step for sure
-			var molecularFormula = MolecularFormulaManipulator.getMolecularFormula(originalMolecule, new MolecularFormula());
+			var molecularFormula = MolecularFormulaTools.GetMolecularFormula(originalMolecule);
 			//now add neutral losses to it
 			var fragsNeutralLoss = AddNeutralLosses(originalMolecule, molecularFormula, true);
 
@@ -325,7 +325,7 @@ namespace MetFragNET.Fragmentation
 
 							//returns true if isomorph
 							//set the current sum formula
-							var fragmentFormula = MolecularFormulaManipulator.getMolecularFormula(set[j]);
+							var fragmentFormula = MolecularFormulaTools.GetMolecularFormula(set[j]);
 							var currentSumFormula = MolecularFormulaTools.GetString(fragmentFormula);
 
 							if (isIdentical(set[j], currentSumFormula))
@@ -386,7 +386,7 @@ namespace MetFragNET.Fragmentation
 						}
 
 						//set the current sum formula
-						var fragmentFormula = MolecularFormulaManipulator.getMolecularFormula(set[i]);
+						var fragmentFormula = MolecularFormulaTools.GetMolecularFormula(set[i]);
 						var currentSumFormula = MolecularFormulaTools.GetString(fragmentFormula);
 						//returns true if isomorph (fast isomorph check)
 						if (isIdentical(set[i], currentSumFormula))
@@ -577,7 +577,7 @@ namespace MetFragNET.Fragmentation
 
 		private bool identicalAtoms(IAtomContainer molecule1, List<IAtomContainer> fragsToCompare)
 		{
-			var molFormula = MolecularFormulaManipulator.getMolecularFormula(molecule1);
+			var molFormula = MolecularFormulaTools.GetMolecularFormula(molecule1);
 			var molFormulaString = MolecularFormulaTools.GetString(molFormula);
 
 			for (var i = 0; i < fragsToCompare.Count; i++)
@@ -589,7 +589,7 @@ namespace MetFragNET.Fragmentation
 				}
 
 				//Molecular Formula redundancy check
-				var molFormulaFrag = MolecularFormulaManipulator.getMolecularFormula(fragsToCompare[i]);
+				var molFormulaFrag = MolecularFormulaTools.GetMolecularFormula(fragsToCompare[i]);
 				var molFormulaFragString = MolecularFormulaTools.GetString(molFormulaFrag);
 				if (molFormulaString.Equals(molFormulaFragString))
 				{
@@ -669,7 +669,7 @@ namespace MetFragNET.Fragmentation
 
 		private bool prepareAtomWeights(IAtomContainer mol)
 		{
-			var molecularFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
+			var molecularFormula = MolecularFormulaTools.GetMolecularFormula(mol);
 
 			var elements = MolecularFormulaManipulator.elements(molecularFormula);
 			foreach (var element in elements.ToWindowsEnumerable<IElement>())
@@ -874,7 +874,7 @@ namespace MetFragNET.Fragmentation
 							foreach (var x in fragmentsNL)
 							{
 								var fragmentNL = x;
-								var fragmentMolFormula = MolecularFormulaManipulator.getMolecularFormula(fragmentNL);
+								var fragmentMolFormula = MolecularFormulaTools.GetMolecularFormula(fragmentNL);
 								var fragmentMass = MolecularFormulaTools.GetMonoisotopicMass(fragmentMolFormula);
 
 								//skip this fragment which is lighter than the smallest peak
@@ -908,75 +908,45 @@ namespace MetFragNET.Fragmentation
 		 * @return the neutral losses
 		 */
 
-		private Dictionary<double, NeutralLoss> ReadInNeutralLosses()
+		private void ReadInNeutralLosses()
 		{
 			neutralLoss = new Dictionary<double, NeutralLoss>();
-			try
-			{
-				var lossesString = "Ion Mode	Exact DM	Topological fragment	Elemental Composition	H-Difference	Furthest Distance	Atom to start Hydrogen Connected to Start Atom	Substance Class Identifier\n"
-				                   + "+ -	18.01056	OH	H2O	-1	3	O	1	Non-specific (OH)\n"
-				                   + "+	46.00548	COOH	HCOOH	-1	3	O	0	Aliphatic Acids, Amino Acid Conjugates â€¦\n"
-				                   + "+ -	17.02655	NH2	NH3	-1	3	N	2	not sure\n"
-				                   + "+ -	27.01090	CN	HCN	-1	3	N	0	Alkaloids\n"
-				                   + "+ -	30.01056	COH	CH2O	-1	3	O	0	Methoxylated aromatic compounds\n"
-				                   + "#+ -	27.99491	COH	CO	1	3	O	0	Flavonoids, Coumarins, Chromones â€¦.\n"
-				                   + "#+ -	43.98983	COOH	CO2	1	3	O	0	Aromatic acids, Lactones \n"
-				                   + "#-	79.95681	SO3H	SO3	1	3	S	0	0	-sulfated compounds\n"
-				                   + "#+ -	162.05282	C6H11O5	C6H10O5	1	6	O	0	Glucosides\n"
-				                   + "//\n";
 
-				var in_ = new ByteArrayInputStream(lossesString.getBytes());
-				var br = new BufferedReader(new InputStreamReader(in_));
-				String strLine;
-				var first = true;
-				//Read File Line By Line
-				while ((strLine = br.readLine()) != null)
+			const string lossesString = "Ion Mode	Exact DM	Topological fragment	Elemental Composition	H-Difference	Furthest Distance	Atom to start Hydrogen Connected to Start Atom	Substance Class Identifier\n"
+			                            + "+ -	18.01056	OH	H2O	-1	3	O	1	Non-specific (OH)\n"
+			                            + "+	46.00548	COOH	HCOOH	-1	3	O	0	Aliphatic Acids, Amino Acid Conjugates â€¦\n"
+			                            + "+ -	17.02655	NH2	NH3	-1	3	N	2	not sure\n"
+			                            + "+ -	27.01090	CN	HCN	-1	3	N	0	Alkaloids\n"
+			                            + "+ -	30.01056	COH	CH2O	-1	3	O	0	Methoxylated aromatic compounds\n"
+			                            + "#+ -	27.99491	COH	CO	1	3	O	0	Flavonoids, Coumarins, Chromones â€¦.\n"
+			                            + "#+ -	43.98983	COOH	CO2	1	3	O	0	Aromatic acids, Lactones \n"
+			                            + "#-	79.95681	SO3H	SO3	1	3	S	0	0	-sulfated compounds\n"
+			                            + "#+ -	162.05282	C6H11O5	C6H10O5	1	6	O	0	Glucosides";
+
+			var lines = lossesString.Split('\n');
+
+			//Read File Line By Line, skipping header
+			foreach (var lineArray in lines.Skip(1).Where(l => !l.StartsWith("#")).Select(l => l.Split('\t')))
+			{
+				int mode;
+				switch (lineArray[0])
 				{
-					//skip header
-					if (first)
-					{
-						first = false;
-						continue;
-					}
-					if (strLine.Equals("//"))
-					{
-						break;
-					}
-
-					if (strLine.startsWith("#"))
-					{
-						continue;
-					}
-
-					var lineArray = strLine.split("\t");
-					var mode = 1;
-					//positive and negative mode
-					if (lineArray[0].Equals("+ -"))
-					{
+					case "+ -":
 						mode = 0;
-					}
-						//negative mode
-					else if (lineArray[0].Equals("-"))
-					{
+						break;
+					case "-":
 						mode = -1;
-					}
-
-					var mfT = new MolecularFormula();
-					var mfE = new MolecularFormula();
-					var nl = new NeutralLoss(MolecularFormulaManipulator.getMolecularFormula(lineArray[3], mfE), MolecularFormulaManipulator.getMolecularFormula(lineArray[2], mfT), mode, Integer.parseInt(lineArray[4]), Integer.parseInt(lineArray[5]), lineArray[6], Integer.parseInt(lineArray[7]));
-					var deltaM = Double.Parse(lineArray[1]);
-					neutralLoss[deltaM] = nl;
-					//System.out.println("Bond: '" + bond + "' Energy: '" + energy + "'");
+						break;
+					default:
+						mode = 1;
+						break;
 				}
-				//Close the input stream
-				in_.close();
+				var mfT = new MolecularFormula();
+				var mfE = new MolecularFormula();
+				var nl = new NeutralLoss(MolecularFormulaManipulator.getMolecularFormula(lineArray[3], mfE), MolecularFormulaManipulator.getMolecularFormula(lineArray[2], mfT), mode, Integer.parseInt(lineArray[4]), Integer.parseInt(lineArray[5]), lineArray[6], Integer.parseInt(lineArray[7]));
+				var deltaM = Double.Parse(lineArray[1]);
+				neutralLoss[deltaM] = nl;
 			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-
-			return neutralLoss;
 		}
 	}
 }

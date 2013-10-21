@@ -4,10 +4,14 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using org.openscience.cdk;
+using java.lang;
 using org.openscience.cdk.config;
 using org.openscience.cdk.interfaces;
+using org.openscience.cdk.silent;
 using org.openscience.cdk.tools.manipulator;
+using Atom = org.openscience.cdk.Atom;
+using ChemObject = org.openscience.cdk.ChemObject;
+using Element = org.openscience.cdk.Element;
 
 namespace MetFragNET.Tools
 {
@@ -117,6 +121,29 @@ namespace MetFragNET.Tools
 			}
 
 			return string.Join("", parts);
+		}
+
+		public static IMolecularFormula GetMolecularFormula(IAtomContainer atomContainer)
+		{
+			var formula = new MolecularFormula();
+			var charge = 0;
+			var hydrogen = new Atom("H");
+
+			foreach (var iAtom in atomContainer.atoms().ToWindowsEnumerable<IAtom>())
+			{
+				formula.addIsotope(iAtom);
+				charge += iAtom.getFormalCharge().intValue();
+				var implicitHydrogenCount = iAtom.getImplicitHydrogenCount();
+				var implicitHydrogenCountValue = implicitHydrogenCount != null ? implicitHydrogenCount.intValue() : (int?) null;
+
+				if (implicitHydrogenCountValue.HasValue && implicitHydrogenCountValue.Value > 0)
+				{
+					formula.addIsotope(hydrogen, implicitHydrogenCountValue.Value);
+				}
+			}
+
+			formula.setCharge(new Integer(charge));
+			return formula;
 		}
 
 		public static bool IsPossibleNeutralLoss(Dictionary<string, double> originalFormulaMap, IMolecularFormula neutralLossFormula)
