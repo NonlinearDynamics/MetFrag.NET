@@ -3,6 +3,7 @@ using java.io;
 using org.openscience.cdk;
 using org.openscience.cdk.interfaces;
 using org.openscience.cdk.io;
+using org.openscience.cdk.tools;
 using org.openscience.cdk.tools.manipulator;
 
 namespace MetFragNET.Algorithm

@@ -81,7 +81,7 @@ namespace MetFragNETTests
 			CollectionAssert.AreEquivalent(results[1].FragmentPics.Select(p => Clean(p.MolecularFormula)), new[] { "C18H27O9", "C18H29O9", "C15H23O8" });
 			CollectionAssert.AreEquivalent(results[1].FragmentPics.Select(p => p.NeutralChange), new[] { "+H", "-H", "-H" });
 
-			CollectionAssert.AreEquivalent(results[2].FragmentPics.Select(p => Clean(p.MolecularFormula)), new[] { "C24H30N1O7" });
+			CollectionAssert.AreEquivalent(results[2].FragmentPics.Select(p => Clean(p.MolecularFormula)), new[] { "C24H30NO7" });
 			CollectionAssert.AreEquivalent(results[2].FragmentPics.Select(p => p.NeutralChange), new[] { "+H" });
 
 			CollectionAssert.AreEquivalent(results[3].FragmentPics.Select(p => Clean(p.MolecularFormula)), new[] { "C21H32O10", "C15H23O8", "C10H14O8" });

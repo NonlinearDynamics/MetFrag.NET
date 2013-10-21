@@ -1,10 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
-using org.openscience.cdk;
+using java.lang;
 using org.openscience.cdk.config;
 using org.openscience.cdk.interfaces;
+using org.openscience.cdk.silent;
 using org.openscience.cdk.tools.manipulator;
+using Atom = org.openscience.cdk.Atom;
+using ChemObject = org.openscience.cdk.ChemObject;
+using Element = org.openscience.cdk.Element;
 
 namespace MetFragNET.Tools
 {
@@ -77,6 +84,66 @@ namespace MetFragNET.Tools
 				parsedFormula[symbol] = mass;
 			}
 			return parsedFormula;
+		}
+
+		// This is ported from the CDK and modified to not do so much uneccessary looping
+		public static string GetString(IMolecularFormula formula)
+		{
+			var carbon = new Element("C");
+			var poossibleElements = MolecularFormulaManipulator.containsElement(formula, carbon) ? HillSystem.ElementsWithCarbons : HillSystem.ElementsWithoutCarbons;
+
+			var elemCounts = new OrderedDictionary();
+			foreach (var possibleElement in poossibleElements)
+			{
+				elemCounts.Add(possibleElement, 0);
+			}
+
+			foreach (var isotope in formula.isotopes().ToWindowsEnumerable<IIsotope>())
+			{
+				var isotopeSymbol = isotope.getSymbol();
+				var currentCount = (int)elemCounts[isotopeSymbol];
+				elemCounts[isotopeSymbol] = currentCount + formula.getIsotopeCount(isotope);
+			}
+
+			var parts = new List<string>();
+			foreach (DictionaryEntry elemCount in elemCounts)
+			{
+				var count = (int)elemCount.Value;
+				var elem = (string)elemCount.Key;
+				if (count == 1)
+				{
+					parts.Add(elem);
+				}
+				else if (count > 1)
+				{
+					parts.Add(string.Format("{0}{1}", elem, count));
+				}
+			}
+
+			return string.Join("", parts);
+		}
+
+		public static IMolecularFormula GetMolecularFormula(IAtomContainer atomContainer)
+		{
+			var formula = new MolecularFormula();
+			var charge = 0;
+			var hydrogen = new Atom("H");
+
+			foreach (var iAtom in atomContainer.atoms().ToWindowsEnumerable<IAtom>())
+			{
+				formula.addIsotope(iAtom);
+				charge += iAtom.getFormalCharge().intValue();
+				var implicitHydrogenCount = iAtom.getImplicitHydrogenCount();
+				var implicitHydrogenCountValue = implicitHydrogenCount != null ? implicitHydrogenCount.intValue() : (int?) null;
+
+				if (implicitHydrogenCountValue.HasValue && implicitHydrogenCountValue.Value > 0)
+				{
+					formula.addIsotope(hydrogen, implicitHydrogenCountValue.Value);
+				}
+			}
+
+			formula.setCharge(new Integer(charge));
+			return formula;
 		}
 
 		public static bool IsPossibleNeutralLoss(Dictionary<string, double> originalFormulaMap, IMolecularFormula neutralLossFormula)

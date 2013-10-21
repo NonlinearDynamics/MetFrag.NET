@@ -116,13 +116,12 @@ namespace MetFragNET.Spectra
 
 		private static string GetMolecularFormulaAsString(IAtomContainer ac)
 		{
-			return MolecularFormulaManipulator.getHTML(GetMolecularFormula(ac));
+			return MolecularFormulaTools.GetString(GetMolecularFormula(ac));
 		}
 
 		private static IMolecularFormula GetMolecularFormula(IAtomContainer ac)
 		{
-			IMolecularFormula molecularFormula = new MolecularFormula();
-			return MolecularFormulaManipulator.getMolecularFormula(ac, molecularFormula);			
+			return MolecularFormulaTools.GetMolecularFormula(ac);			
 		}
 
 		private static string GetNeutralChange(IChemObject ac, int hydrogensAdded)
