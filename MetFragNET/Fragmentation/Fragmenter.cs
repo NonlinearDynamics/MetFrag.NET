@@ -714,8 +714,10 @@ namespace MetFragNET.Fragmentation
 			{
 				foreach (var bondedAtom in aBond.atoms().ToWindowsEnumerable<IAtom>())
 				{
+					var done = false;
+					atomsDone.TryGetValue(bondedAtom.getID(), out done);
 					//check if the atom is already contained
-					if (atomsDone.ContainsKey(bondedAtom.getID()) && atomsDone[bondedAtom.getID()])
+					if (done)
 					{
 						continue;
 					}
