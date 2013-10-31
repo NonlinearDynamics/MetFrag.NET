@@ -756,7 +756,7 @@ namespace MetFragNET.Fragmentation
 
 			foreach (var aBond in connectedBonds)
 			{
-				if (bondList.Contains(aBond) || aBond.Equals(bondToRemove))
+				if (aBond.Equals(bondToRemove) || bondList.Contains(aBond))
 				{
 					continue;
 				}
@@ -816,7 +816,7 @@ namespace MetFragNET.Fragmentation
 			var connectedBonds = atomBonds[atom];
 			foreach (var aBond in connectedBonds)
 			{
-				if (bondList.Contains(aBond) || aBond.Equals(bondToRemove) || aBond.Equals(bondToRemove2))
+				if (aBond.Equals(bondToRemove) || aBond.Equals(bondToRemove2) || bondList.Contains(aBond))
 				{
 					continue;
 				}
