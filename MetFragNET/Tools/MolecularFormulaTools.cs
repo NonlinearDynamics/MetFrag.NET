@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -58,7 +59,7 @@ namespace MetFragNET.Tools
 				}
 
 				var mass = a.getExactMass().doubleValue();
-				mass = mass * double.Parse(numbers[numberCount]);
+                mass = mass * double.Parse(numbers[numberCount], CultureInfo.InvariantCulture);
 				numberCount++;
 				parsedFormula[symbols[i]] = mass;
 			}

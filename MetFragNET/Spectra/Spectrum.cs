@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace MetFragNET.Spectra
@@ -75,7 +76,7 @@ namespace MetFragNET.Spectra
 
 				if (count >= 2)
 				{
-					parsedPeaks.Add(new Peak(Double.Parse(arrayClean[0]), Double.Parse(arrayClean[1])));
+                    parsedPeaks.Add(new Peak(Double.Parse(arrayClean[0], CultureInfo.InvariantCulture), Double.Parse(arrayClean[1], CultureInfo.InvariantCulture)));
 				}
 			}
 

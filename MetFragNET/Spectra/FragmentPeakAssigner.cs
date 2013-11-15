@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using MetFragNET.Results;
 using MetFragNET.Tools;
@@ -41,7 +42,7 @@ namespace MetFragNET.Spectra
 					double hydrogenPenalty;
 					if (MatchByMass(fragment, peak.Mass, mzabs, mzppm, out matchedMass, out hydrogenPenalty, out hydrogensAdded))
 					{
-						var match = new PeakMolPair(fragment, peak, matchedMass, GetMolecularFormulaAsString(fragment), hydrogenPenalty, double.Parse((string)fragment.getProperty("BondEnergy")), GetNeutralChange(fragment, hydrogensAdded));
+                        var match = new PeakMolPair(fragment, peak, matchedMass, GetMolecularFormulaAsString(fragment), hydrogenPenalty, double.Parse((string)fragment.getProperty("BondEnergy"), CultureInfo.InvariantCulture), GetNeutralChange(fragment, hydrogensAdded));
 						hitsAll.Add(match);
 
 						// If we don't yet have a match, add it
@@ -71,7 +72,7 @@ namespace MetFragNET.Spectra
 			//speed up and neutral loss matching!
 			if (ac.getProperty("FragmentMass") != null && (string)ac.getProperty("FragmentMass") != "")
 			{
-				mass = double.Parse(ac.getProperty("FragmentMass").ToString());
+                mass = double.Parse(ac.getProperty("FragmentMass").ToString(), CultureInfo.InvariantCulture);
 			}
 			else
 			{

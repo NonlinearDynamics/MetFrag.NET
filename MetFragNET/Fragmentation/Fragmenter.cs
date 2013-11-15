@@ -417,7 +417,7 @@ namespace MetFragNET.Fragmentation
 			var props = mol.getProperties();
 			if (props.get("BondEnergy") != null)
 			{
-				var sumEnergy = Convert.ToDouble((String)props.get("BondEnergy")) + bondEnergy;
+				var sumEnergy = Convert.ToDouble((String)props.get("BondEnergy"), CultureInfo.InvariantCulture) + bondEnergy;
 				props.put("BondEnergy", sumEnergy.ToString(CultureInfo.InvariantCulture));
 			}
 			else
@@ -445,7 +445,7 @@ namespace MetFragNET.Fragmentation
 			var bondEnergyOrig = (String)origMol.getProperty("BondEnergy");
 			if (bondEnergyOrig != null)
 			{
-				var sumEnergy = Convert.ToDouble(bondEnergyOrig) + bondEnergy;
+                var sumEnergy = Convert.ToDouble(bondEnergyOrig, CultureInfo.InvariantCulture) + bondEnergy;
 				props.put("BondEnergy", sumEnergy.ToString(CultureInfo.InvariantCulture));
 			}
 			else
@@ -479,7 +479,7 @@ namespace MetFragNET.Fragmentation
 					var tempNLMass = fragment.getProperty("NlMass").ToString().Split(',');
 					for (var i = 0; i < tempNLMass.Count(); i++)
 					{
-						nlMass += Convert.ToDouble(tempNLMass[i]);
+                        nlMass += Convert.ToDouble(tempNLMass[i], CultureInfo.InvariantCulture);
 					}
 				}
 			}
@@ -543,10 +543,10 @@ namespace MetFragNET.Fragmentation
 				if (isomorph)
 				{
 					//now replace fragment if its "bond energy is less"
-					var bondEnergy = Double.Parse((String)fragment.getProperty("BondEnergy"));
+					var bondEnergy = Double.Parse((String)fragment.getProperty("BondEnergy"), CultureInfo.InvariantCulture);
 					foreach (var atomContainer in fragsToCompare)
 					{
-						if (Double.Parse((String)atomContainer.getProperty("BondEnergy")) > bondEnergy)
+                        if (Double.Parse((String)atomContainer.getProperty("BondEnergy"), CultureInfo.InvariantCulture) > bondEnergy)
 						{
 							addFragmentToListMapReplace(fragment, currentSumFormula);
 						}
@@ -966,7 +966,7 @@ namespace MetFragNET.Fragmentation
 				var mfT = new MolecularFormula();
 				var mfE = new MolecularFormula();
 				var nl = new NeutralLoss(MolecularFormulaManipulator.getMolecularFormula(lineArray[3], mfE), MolecularFormulaManipulator.getMolecularFormula(lineArray[2], mfT), mode, Integer.parseInt(lineArray[4]), Integer.parseInt(lineArray[5]), lineArray[6], Integer.parseInt(lineArray[7]));
-				var deltaM = Double.Parse(lineArray[1]);
+                var deltaM = Double.Parse(lineArray[1], CultureInfo.InvariantCulture);
 				neutralLoss[deltaM] = nl;
 			}
 		}

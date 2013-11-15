@@ -59,6 +59,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BondEnergyCalculatorTests.cs" />
+    <Compile Include="CultureChanger.cs" />
     <Compile Include="MolecularFormulaTests.cs" />
     <Compile Include="FragConstraint.cs" />
     <Compile Include="NldMetFragTests.cs" />
