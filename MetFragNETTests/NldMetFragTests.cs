@@ -51,8 +51,22 @@ namespace MetFragNETTests
 			Assert.That(results[0].FragmentPics.Count(), Is.EqualTo(0));
 		}
 
-		[Test]
-		public void BioMolecules_CreatesExpectedNumberOfFragments()
+        [TestCase("en-GB")]
+        [TestCase("fr-FR")]
+        [TestCase("es-AR")]
+        [TestCase("ar")]
+        [TestCase("es")]
+        [TestCase("am")]
+        [TestCase("dv")]
+        public void BioMolecules_CreatesExpectedNumberOfFragments_WithCulture(string culture)
+        {
+            using (new CultureChanger(culture))
+            {
+                BioMolecules_CreatesExpectedNumberOfFragments();
+            }
+        }
+
+		private void BioMolecules_CreatesExpectedNumberOfFragments()
 		{
 			var peaksToUse = @"100.397850036621 6084.7646484375
 111.041725158691 89713.7109375
@@ -159,8 +173,22 @@ namespace MetFragNETTests
 			Assert.That(results[3].FragmentPics.Count(), Is.EqualTo(4));
 		}
 
-		[Test]
-		public void Biomolecules_Compound_528_GeneratesExpectedNumberOfFragments()
+        [TestCase("en-GB")]
+        [TestCase("fr-FR")]
+        [TestCase("es-AR")]
+        [TestCase("ar")]
+        [TestCase("es")]
+        [TestCase("am")]
+        [TestCase("dv")]
+        public void Biomolecules_Compound_528_GeneratesExpectedNumberOfFragments_WithCulture(string culture)
+        {
+            using (new CultureChanger(culture))
+            {
+                Biomolecules_Compound_528_GeneratesExpectedNumberOfFragments();
+            }
+        }
+
+		private void Biomolecules_Compound_528_GeneratesExpectedNumberOfFragments()
 		{
 			var peaksToUse = @"102.223709106445 3210.46923828125
 109.74959564209 3258.2373046875
