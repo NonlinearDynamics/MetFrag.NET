@@ -417,7 +417,7 @@ namespace MetFragNET.Fragmentation
 			var props = mol.getProperties();
 			if (props.get("BondEnergy") != null)
 			{
-				var sumEnergy = Convert.ToDouble((String)props.get("BondEnergy")) + bondEnergy;
+				var sumEnergy = Convert.ToDouble((String)props.get("BondEnergy"), CultureInfo.InvariantCulture) + bondEnergy;
 				props.put("BondEnergy", sumEnergy.ToString(CultureInfo.InvariantCulture));
 			}
 			else
@@ -445,7 +445,7 @@ namespace MetFragNET.Fragmentation
 			var bondEnergyOrig = (String)origMol.getProperty("BondEnergy");
 			if (bondEnergyOrig != null)
 			{
-				var sumEnergy = Convert.ToDouble(bondEnergyOrig) + bondEnergy;
+                var sumEnergy = Convert.ToDouble(bondEnergyOrig, CultureInfo.InvariantCulture) + bondEnergy;
 				props.put("BondEnergy", sumEnergy.ToString(CultureInfo.InvariantCulture));
 			}
 			else
@@ -479,7 +479,7 @@ namespace MetFragNET.Fragmentation
 					var tempNLMass = fragment.getProperty("NlMass").ToString().Split(',');
 					for (var i = 0; i < tempNLMass.Count(); i++)
 					{
-						nlMass += Convert.ToDouble(tempNLMass[i]);
+                        nlMass += Convert.ToDouble(tempNLMass[i], CultureInfo.InvariantCulture);
 					}
 				}
 			}
