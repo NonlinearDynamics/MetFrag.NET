@@ -133,7 +133,8 @@ namespace MetFragNET.Fragmentation
 					joiner = "~";
 					break;
 				default:
-					return null;
+                    joiner = "?";
+                    break;
 			}
 
 			return string.Format("{0}{1}{2}", atom1, joiner, atom2);
