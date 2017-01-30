@@ -78,7 +78,7 @@ namespace MetFragNET.Fragmentation
 			allRingsFinder.setTimeout(int.MaxValue);
 			// TODO: Steve: The 7 is a max ring size - I added this to prevent it getting in to infinite loops (7 comes from MetFrag
 			// where it is used in some other random class). Don't know if we need to change this??
-			allRings = allRingsFinder.findAllRings(originalMolecule, Integer.valueOf(7));
+			allRings = allRingsFinder.findAllRings(originalMolecule, 7);
 			aromaticBonds = new List<IBond>();
 
 			CDKHueckelAromaticityDetector.detectAromaticity(originalMolecule);
@@ -200,9 +200,9 @@ namespace MetFragNET.Fragmentation
 			return fragmentsReturn;
 		}
 
-		private IMolecule createMolecule(IAtomContainer atomContainer, String bondEnergy, int treeDepth)
+		private IAtomContainer createMolecule(IAtomContainer atomContainer, String bondEnergy, int treeDepth)
 		{
-			IMolecule molecule = new Molecule(atomContainer);
+            var molecule = new AtomContainer(atomContainer);
 
 			molecule.setProperties(atomContainer.getProperties());
 			molecule.setProperty("BondEnergy", bondEnergy);
@@ -414,18 +414,16 @@ namespace MetFragNET.Fragmentation
 
 		private IAtomContainer setBondEnergy(IAtomContainer mol, Double bondEnergy)
 		{
-			var props = mol.getProperties();
-			if (props.get("BondEnergy") != null)
+			if (mol.getProperty("BondEnergy") != null)
 			{
-				var sumEnergy = Convert.ToDouble((String)props.get("BondEnergy"), CultureInfo.InvariantCulture) + bondEnergy;
-				props.put("BondEnergy", sumEnergy.ToString(CultureInfo.InvariantCulture));
+				var sumEnergy = Convert.ToDouble((String)mol.getProperty("BondEnergy"), CultureInfo.InvariantCulture) + bondEnergy;
+				mol.setProperty("BondEnergy", sumEnergy.ToString(CultureInfo.InvariantCulture));
 			}
 			else
 			{
-				props.put("BondEnergy", bondEnergy.ToString(CultureInfo.InvariantCulture));
+				mol.setProperty("BondEnergy", bondEnergy.ToString(CultureInfo.InvariantCulture));
 			}
 
-			mol.setProperties(props);
 			return mol;
 		}
 
@@ -441,19 +439,17 @@ namespace MetFragNET.Fragmentation
 
 		private IAtomContainer setBondEnergy(IAtomContainer origMol, IAtomContainer mol, Double bondEnergy)
 		{
-			var props = mol.getProperties();
 			var bondEnergyOrig = (String)origMol.getProperty("BondEnergy");
 			if (bondEnergyOrig != null)
 			{
                 var sumEnergy = Convert.ToDouble(bondEnergyOrig, CultureInfo.InvariantCulture) + bondEnergy;
-				props.put("BondEnergy", sumEnergy.ToString(CultureInfo.InvariantCulture));
+				mol.setProperty("BondEnergy", sumEnergy.ToString(CultureInfo.InvariantCulture));
 			}
 			else
 			{
-				props.put("BondEnergy", bondEnergy.ToString(CultureInfo.InvariantCulture));
+				mol.setProperty("BondEnergy", bondEnergy.ToString(CultureInfo.InvariantCulture));
 			}
 
-			mol.setProperties(props);
 			return mol;
 		}
 
@@ -680,8 +676,8 @@ namespace MetFragNET.Fragmentation
 			{
 				IAtom a = new Atom(element);
 				try
-				{
-					IsotopeFactory.getInstance(a.getBuilder()).configure(a);
+				{                    
+					Isotopes.getInstance().configure(a);
 				}
 				catch (IllegalArgumentException)
 				{
@@ -908,8 +904,7 @@ namespace MetFragNET.Fragmentation
 								//set bond energy
 								fragmentNL = setBondEnergy(fragment, fragmentNL, 500.0);
 
-								var props = fragmentNL.getProperties();
-								props.put("NeutralLossRule", MolecularFormulaTools.GetString(neutralLossFormula));
+								fragmentNL.setProperty("NeutralLossRule", MolecularFormulaTools.GetString(neutralLossFormula));
 								addFragmentToListMap(fragmentNL, MolecularFormulaTools.GetString(fragmentMolFormula));
 
 								//add to result list

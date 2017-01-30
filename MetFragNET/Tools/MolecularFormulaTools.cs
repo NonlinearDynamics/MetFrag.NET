@@ -49,7 +49,7 @@ namespace MetFragNET.Tools
 				//create temporary atom with symbol and "configure" it
 				IAtom a = new Atom(symbols[i]);
 
-				var isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+				var isofac = Isotopes.getInstance();
 				isofac.configure(a);
 
 				//fix if the digit is not written
@@ -77,7 +77,7 @@ namespace MetFragNET.Tools
 				var elementCount = MolecularFormulaManipulator.getElementCount(formula, element);
 				var symbol = element.getSymbol();
 				var a = new Atom(symbol);
-				var isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+				var isofac = Isotopes.getInstance();
 				isofac.configure(a);
 				var mass = a.getExactMass().doubleValue();
 				mass = mass * elementCount;
