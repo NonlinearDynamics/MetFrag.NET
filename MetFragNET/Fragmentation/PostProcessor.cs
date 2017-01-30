@@ -155,7 +155,7 @@ namespace MetFragNET.Fragmentation
 							{
 								var set = ConnectivityChecker
 									.partitionIntoMolecules(temp);
-								foreach (var molecule in set.molecules().ToWindowsEnumerable<IMolecule>())
+								foreach (var molecule in set.atomContainers().ToWindowsEnumerable<IAtomContainer>())
 								{
 									ret.Add(molecule);
 								}
