@@ -167,7 +167,7 @@ namespace MetFragNETTests
 			var results = fragger.metFrag(TestConfig.ExactMass, peaksToUse, TestConfig.Mode, TestConfig.MzAbs, TestConfig.MzPpm, CancellationToken.None).ToList();
 
 			Assert.That(results.Count, Is.EqualTo(4));
-			Assert.That(results[0].FragmentPics.Count(), Is.EqualTo(4));
+			Assert.That(results[0].FragmentPics.Count(), Is.EqualTo(1));
 			Assert.That(results[1].FragmentPics.Count(), Is.EqualTo(4));
 			Assert.That(results[2].FragmentPics.Count(), Is.EqualTo(4));
 			Assert.That(results[3].FragmentPics.Count(), Is.EqualTo(4));
@@ -280,7 +280,7 @@ namespace MetFragNETTests
 			Assert.That(results.Count, Is.EqualTo(4));
 			Assert.That(results[0].FragmentPics.Count(), Is.EqualTo(15));
 			Assert.That(results[1].FragmentPics.Count(), Is.EqualTo(4));
-			Assert.That(results[2].FragmentPics.Count(), Is.EqualTo(13));
+			Assert.That(results[2].FragmentPics.Count(), Is.EqualTo(5));
 			Assert.That(results[3].FragmentPics.Count(), Is.EqualTo(6));
 		}
 

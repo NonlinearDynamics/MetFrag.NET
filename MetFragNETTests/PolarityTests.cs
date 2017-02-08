@@ -48,14 +48,11 @@ namespace MetFragNETTests
 
 			Assert.That(results.Count, Is.EqualTo(1));
 			var frags = results[0].FragmentPics.ToList();
-			Assert.That(frags.Count, Is.EqualTo(7));
-			Assert.That(frags[0], new FragConstraint("C10H13NO2", "", 179.0946));
-			Assert.That(frags[1], new FragConstraint("C9H10N", "+H", 133.0891));
-			Assert.That(frags[2], new FragConstraint("C9H8O", "+H", 133.0653));
-			Assert.That(frags[3], new FragConstraint("C8H7NO", "", 133.0528));
-			Assert.That(frags[4], new FragConstraint("C8H10N", "+H", 121.0891));			 
-			Assert.That(frags[5], new FragConstraint("C8H11N", "", 121.0891));
-			Assert.That(frags[6], new FragConstraint("C7H6O2", "-H", 121.029));
+			Assert.That(frags.Count, Is.EqualTo(4));
+			Assert.That(frags[0], new FragConstraint("C10H13NO2", "", 179.0946));			
+			Assert.That(frags[1], new FragConstraint("C9H8O", "+H", 133.0653));
+			Assert.That(frags[2], new FragConstraint("C8H7NO", "", 133.0528));
+			Assert.That(frags[3], new FragConstraint("C7H6O2", "-H", 121.029));
 		}
 	}
 }
