@@ -39,11 +39,13 @@ namespace MetFragNET.Fragmentation
 		private IAtomContainer originalMolecule;
 		private PostProcessor pp;
 		private double protonMass = MolecularFormulaTools.GetMonoisotopicMass("H1");
+        private readonly bool breakAromaticRings;
 
-		public Fragmenter(IList<Peak> peakList, FragmentationConfig config)
+        public Fragmenter(IList<Peak> peakList, FragmentationConfig config, bool breakAromaticRings)
 		{
 			this.peakList = peakList;
 			this.config = config;
+            this.breakAromaticRings = breakAromaticRings;
 
 			SetMinWeight();
 			ReadInNeutralLosses();
@@ -219,6 +221,17 @@ namespace MetFragNET.Fragmentation
 			foreach (var bond in atomContainer.bonds().ToWindowsEnumerable<IBond>())
 			{
 				var isTerminal = false;
+
+
+                //lets see if it is a ring and aromatic
+                //don't split up aromatic rings...see constructor for option
+                if (!breakAromaticRings)
+                {
+                    if (aromaticBonds.Contains(bond))
+                    {
+                        continue;
+                    }
+                }
 
 				// lets see if it is a terminal bond...we dont want to split up the hydrogen
 				foreach (var atom in bond.atoms().ToWindowsEnumerable<IAtom>())

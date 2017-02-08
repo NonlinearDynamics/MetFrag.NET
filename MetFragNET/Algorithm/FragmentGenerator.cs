@@ -20,7 +20,7 @@ namespace MetFragNET.Algorithm
 
 		public IEnumerable<IAtomContainer> GenerateFragments(IAtomContainer compound, string compoundId, CancellationToken isCancelled)
 		{
-			var fragmenter = new Fragmenter(spectrum.Peaks.ToList(), config);
+			var fragmenter = new Fragmenter(spectrum.Peaks.ToList(), config, false);
 
 			// This might throw an OutOfMemoryException, but I want it to be thrown not silently fail
 			return fragmenter.GenerateFragmentsEfficient(compound, true, config.TreeDepth, compoundId, isCancelled);
