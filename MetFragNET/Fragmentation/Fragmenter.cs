@@ -17,6 +17,7 @@ using org.openscience.cdk.silent;
 using org.openscience.cdk.tools.manipulator;
 using Double = System.Double;
 using String = System.String;
+using org.openscience.cdk.exception;
 
 namespace MetFragNET.Fragmentation
 {
@@ -72,19 +73,21 @@ namespace MetFragNET.Fragmentation
 			//mark all the bonds and atoms with numbers --> identify them later on        
 			originalMolecule = markAllBonds(original);
 
-			//do ring detection with the original molecule
-			var allRingsFinder = new AllRingsFinder();
+			//do ring detection with the original molecule using CDK's highest precalculated threshold
+			var allRingsFinder = AllRingsFinder.usingThreshold(AllRingsFinder.Threshold.PubChem_994);
+            try
+            {
+                // limit the computation using only the threshold above, not the maxRingSize
+                allRings = allRingsFinder.findAllRings(originalMolecule, maxRingSize: int.MaxValue); 
+            }
+            catch (CDKException)
+            {
+                // in case the above computation limit is exceeded, abort the fragmentation process
+                return false;
+            }
 
-			// Steve: Set a really large timeout, because we don't want to crash just because it took a long time.
-			// The size limit of 7 below should stop it looping forever.
-			allRingsFinder.setTimeout(int.MaxValue);
-			// TODO: Steve: The 7 is a max ring size - I added this to prevent it getting in to infinite loops (7 comes from MetFrag
-			// where it is used in some other random class). Don't know if we need to change this??
-			allRings = allRingsFinder.findAllRings(originalMolecule, 7);
-			aromaticBonds = new List<IBond>();
-
+            aromaticBonds = new List<IBond>();
 			CDKHueckelAromaticityDetector.detectAromaticity(originalMolecule);
-
 			foreach (var bond in originalMolecule.bonds().ToWindowsEnumerable<IBond>())
 			{
 				//lets see if it is a ring and aromatic
